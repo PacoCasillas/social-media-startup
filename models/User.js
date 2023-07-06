@@ -13,7 +13,7 @@ const userSchema = new Schema(
             type: String,
             unique: true,
             required: [true, 'Email is required'],
-            // match that this is a valid email address
+            // Match that this is a valid email address
             match: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
         },
         thoughts: [
@@ -30,7 +30,7 @@ const userSchema = new Schema(
         ],
     },
     {
-        // use virtuals to add a property to the schema that is not stored in MongoDB
+        // Use virtuals to add a property to the schema that is not stored in MongoDB
         toJSON: {
             virtuals: true,
         },
@@ -38,14 +38,14 @@ const userSchema = new Schema(
     }
 );
 
-// virtual 'friendCount' retrieves the length of the user's friends array field on query
+// Virtual 'friendCount' retrieves the length of the user's friends array field on query
 userSchema
     .virtual('friendCount')
     .get(function() {
         return this.friends.length;
     });
 
-// initialize the User model
+// Initialize the User model
 const User = model('user', userSchema);
 
 module.exports = User;
