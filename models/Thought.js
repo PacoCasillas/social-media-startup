@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const reactionSchema = require('./Reaction');
 
 // I have to add this here because I will need it later. 
 // If I define this after the 'get' function it wont be accessible
