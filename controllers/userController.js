@@ -11,7 +11,7 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-    // Get a single user by either their id
+    // Get a single user by its id
     async getSingleUser(req, res) {
         try {
             const user = await User.findOne({ _id: req.params.userId })
@@ -68,4 +68,4 @@ module.exports = {
             res.status(500).json(err);
         }
     }
-}
+};
