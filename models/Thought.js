@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
+const moment = require('moment');
 
 // I have to add this here because I will need it later. 
 // If I define this after the 'get' function it wont be accessible
@@ -7,8 +8,8 @@ const reactionSchema = require('./Reaction');
 // JavaScript is a top-down lenguage so it reads from top to bottom
 
 const dateFormat = createdAt => {
-    return moment(createdAt).format('MMM DD, YYYY [at] hh:mm a');
-}
+    return moment(createdAt, "MMM DD, YYYY hh:mm A").toDate();
+  };
 
 // Schema to create a new thought
 const thoughtSchema = new Schema(

@@ -14,7 +14,7 @@ module.exports = {
     // Get a single user by its id
     async getSingleUser(req, res) {
         try {
-            const user = await User.findOne({ _id: req.params.userId })
+            const user = await User.findOne({ _id: req.params.id })
             // instructing Mongoose to exclude the __v field in order to reduce the response payload.
             .select('-__v');
 
@@ -41,7 +41,7 @@ module.exports = {
     // Update a user
     async updateUser(req, res) {
         try {
-            const user = await User.findByIdAndUpdate({_id: req.params.userId}, req.body, {new: true});
+            const user = await User.findByIdAndUpdate({_id: req.params.id}, req.body, {new: true});
             res.json(user);
         } catch (err) {
             console.log(err);
@@ -51,7 +51,7 @@ module.exports = {
     // Delete a user
     async deleteUser(req, res) {
         try {
-            const user = await User.findOneAndRemove({_id: req.params.userId});
+            const user = await User.findOneAndRemove({ _id: req.params.id });
 
             if (!user) {
                 return res.status(404).json({ 

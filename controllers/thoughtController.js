@@ -14,7 +14,7 @@ module.exports = {
     // Get a single thought by its _id
     async getSingleThought(req, res) {
         try {
-            const thought = await Thought.findOne({ _id: req.params.thoughtId })
+            const thought = await Thought.findOne({ _id: req.params.id })
             // instructing Mongoose to exclude the __v field in order to reduce the response payload.
             .select('-__v');
 
@@ -35,7 +35,7 @@ module.exports = {
             // Find the user associated with the thought
             const user = await User.findOneAndUpdate(
                 // find the user by its _id in req.body
-                { _id: req.body.userId },
+                { username: req.body.username },
                 // add the thought _id to the user's thoughts array field
                 { $push: { thoughts: thought._id } },
                 // instruct Mongoose to return the updated user
@@ -43,7 +43,7 @@ module.exports = {
             );
 
             if (!user) {
-                return res.status(404).json({ message: 'No user found with this id!' });
+                return res.status(404).json({ message: 'No user found with that username!' });
             }
 
             res.json(thought);
@@ -55,8 +55,8 @@ module.exports = {
     // Update a thought by its _id
     async updateThought(req, res) {
         try {
-            const Thought = await Thought.findOneAndUpdate({ _id: req.params.thoughtId }, req.body, { new: true });
-            res.json(Thought);
+            const thought = await Thought.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+            res.json(thought);
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
@@ -65,7 +65,7 @@ module.exports = {
     // Delete a thought
     async deleteThought(req, res) {
         try {
-            const thought = await Thought.findOneAndRemove({ _id: req.params.thoughtId });
+            const thought = await Thought.findOneAndRemove({ _id: req.params.id });
 
             if (!thought) {
                 return res.status(404).json({ 
@@ -83,7 +83,7 @@ module.exports = {
     async addReaction(req, res) {
         try {
             const thought = await Thought.findOneAndUpdate(
-                { _id: req.params.thoughtId },
+                { _id: req.params.id },
                 // add the reaction to the thought's reactions array field
                 { $push: { reactions: req.body } },
                 { new: true }
@@ -103,9 +103,9 @@ module.exports = {
     async removeReaction(req, res) {
         try {
             const thought = await Thought.findOneAndUpdate(
-                { _id: req.params.thoughtId },
+                { _id: req.params.id },
                 // remove the reaction from the thought's reactions array field
-                { $pull: { reactions: { reactionId: req.params.reactionId } } },
+                { $pull: { reactions: { reactionId: req.params.id } } },
                 { new: true }
             );
 
