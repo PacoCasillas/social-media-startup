@@ -37,7 +37,7 @@ module.exports = {
                 // find the user by its _id in req.body
                 { username: req.body.username },
                 // add the thought _id to the user's thoughts array field
-                { $push: { thoughts: thought._id } },
+                { $addToSet: { thoughts: thought._id } },
                 // instruct Mongoose to return the updated user
                 { new: true }
             );
@@ -91,7 +91,7 @@ module.exports = {
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
                 // add the reaction to the thought's reactions array field
-                { $push: { reactions: req.body } },
+                { $addToSet: { reactions: req.body } },
                 { new: true }
             );
 
