@@ -59,10 +59,7 @@ module.exports = {
                 });
             }
 
-            // Bonus: remove a user's associated thoughts when deleted
-            await Thought.deleteMany({ username: user.username });
-
-            res.json({ message: 'User and associated thoughts deleted!' });
+            res.json(user);
         } catch {
             console.log(err);
             res.status(500).json(err);
@@ -77,7 +74,7 @@ module.exports = {
                 return res.status(404).json({ message: 'No user found with this id!' });
             }
 
-            res.json({ message: 'Friend added!' });
+            res.json(user);
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
@@ -92,7 +89,7 @@ module.exports = {
                 return res.status(404).json({ message: 'No user found with this id!' });
             }
 
-            res.json({ message: 'Friend deleted!' });
+            res.json(user);
         } catch (err) {
             console.log(err);
             res.status(500).json(err);

@@ -14,6 +14,7 @@ const {
 router.route('/').get(getAllThoughts).post(createThought);
 
 // Set up GET one, PUT, and DELETE at /api/thoughts/:id
+// BONUS: Remove the thought from the associated user's thoughts array field
 router.route('/:id').get(getSingleThought).put(updateThought).delete(deleteThought);
 
 // Set up POST and DELETE at /api/thoughts/:thoughtId/reactions

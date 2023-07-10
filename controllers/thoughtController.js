@@ -73,6 +73,12 @@ module.exports = {
                 });
             }
 
+            // Bonus: Remove the thought from the associated user's thoughts array field
+            const user = await User.findOneAndUpdate(
+                { thoughts: req.params.id },
+                { $pull: { thoughts: req.params.id } },
+                { new: true }
+            );
             res.json(thought);
         } catch (err) {
             console.log(err);

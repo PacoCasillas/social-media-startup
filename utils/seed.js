@@ -32,6 +32,10 @@ try {
                 thought.reactions.push(reaction);
             }
 
+            // Save the thought
+            await thought.save();
+
+            // Add the thought to the user's thoughts array
             user.thoughts.push(thought);
         }
 
