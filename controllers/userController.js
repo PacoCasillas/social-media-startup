@@ -68,13 +68,15 @@ module.exports = {
     // Add a new friend to a user's friend list
     async addFriend(req, res) {
         try {
-            const user = await User.findOneAndUpdate( { _id: req.params.userId }, { $push: { friends: req.params.friendId } }, { new: true } );
+            const user = await User.findOneAndUpdate( { _id: req.params.userId }, { $push: { friends: req.params.userId } }, { new: true } );
 
-            if (!user) {
+            const friend = await User.findOneAndUpdate( { _id: req.params.friendId }, { $push: { friends: req.params.friendId } }, { new: true } );
+
+            if (!user || !friend) {
                 return res.status(404).json({ message: 'No user found with this id!' });
             }
 
-            res.json(user);
+            res.json({ user, friend, message: 'Friend added!' });
         } catch (err) {
             console.log(err);
             res.status(500).json(err);
