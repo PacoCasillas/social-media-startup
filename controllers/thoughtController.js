@@ -79,6 +79,11 @@ module.exports = {
                 { $pull: { thoughts: req.params.id } },
                 { new: true }
             );
+
+            if (!user) {
+                return res.status(404).json({ message: 'No user found with this id!' });
+            }
+            
             res.json(thought);
         } catch (err) {
             console.log(err);
