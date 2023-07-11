@@ -2,15 +2,6 @@ const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 const moment = require('moment');
 
-// I have to add this here because I will need it later. 
-// If I define this after the 'get' function it wont be accessible
-// at the time when the get function is called.
-// JavaScript is a top-down lenguage so it reads from top to bottom
-
-const dateFormat = createdAt => {
-    return moment(createdAt, "MMM DD, YYYY hh:mm A").toDate();
-  };
-
 // Schema to create a new thought
 const thoughtSchema = new Schema(
     {
@@ -24,8 +15,9 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            // Use a getter method to format the timestamp on query
-            get: (createdAt) => dateFormat(createdAt)
+            get: function (createdAt) {
+                return moment(createdAt).format("MMM DD, YYYY hh:mm A");
+            }
         },
         // The user that created this thought
         username: {

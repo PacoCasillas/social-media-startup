@@ -64,7 +64,8 @@ module.exports = {
             // remove the user's associated friends from the database
             await User.updateMany(
                 { _id: { $in: user.friends } },
-                { $pull: { friends: user._id } }
+                { $pull: { friends: user._id } },
+                { new: true }
             );
 
             res.json(user);
