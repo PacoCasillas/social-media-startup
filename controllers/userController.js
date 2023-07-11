@@ -59,6 +59,14 @@ module.exports = {
                 });
             }
 
+            // remove the user's associated thoughts from the database
+            await Thought.deleteMany({ username: user.username });
+            // remove the user's associated friends from the database
+            await User.updateMany(
+                { _id: { $in: user.friends } },
+                { $pull: { friends: user._id } }
+            );
+
             res.json(user);
         } catch {
             console.log(err);
